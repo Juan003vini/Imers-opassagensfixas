@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imersão Passagens Fixas — David Nussbaum | 18 de Julho</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;0,900;1,700;1,800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+
+/* ── TOKENS ── */
+:root{
+  /* cores */
+  --bg:       #0c0f0e;
+  --bg2:      #080b0a;
+  --card:     #111614;
+  --card2:    #161c1a;
+  --borda:    #1e2824;
+  --borda2:   #2a3830;
+
+  --ouro:     #C9A84C;
+  --ouro-lt:  #E2C47A;
+  --ouro-dk:  #8B6D28;
+  --verde:    #1fba52;
+  --verde-lt: #25d45f;
+
+  --texto:    #F0EDE8;
+  --texto2:   #A8B5AE;
+  --texto3:   #6B7D74;
+
+  --perigo:   #C0392B;
+
+  /* tipografia */
+  --f-titulo: 'Playfair Display', Georgia, serif;
+  --f-corpo:  'Inter', system-ui, sans-serif;
+}
+
+/* ── BASE ── */
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--f-corpo);
+  background:var(--bg);
+  color:var(--texto);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* divisor boarding-pass — assinatura visual */
+.divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--ouro-dk) 30%,var(--ouro) 50%,var(--ouro-dk) 70%,transparent);
+  margin:0;
+  opacity:.5;
+}
+
+/* ── TOPBAR ── */
+.topbar{
+  background:var(--perigo);
+  padding:11px 16px;
+  text-align:center;
+  position:sticky;top:0;z-index:100;
+}
+.topbar-inner{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;}
+.topbar-vagas{
+  font-family:var(--f-corpo);
+  font-size:12px;font-weight:700;
+  color:#fff;text-transform:uppercase;letter-spacing:.8px;
+}
+.topbar-badge{
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.3);
+  color:#fff;font-size:11px;font-weight:700;
+  padding:3px 10px;border-radius:20px;
+  text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;
+}
+.topbar-pulse{
+  width:7px;height:7px;border-radius:50%;
+  background:#ff8080;
+  animation:blink 1.2s infinite;
+  flex-shrink:0;
+}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.2;}}
+
+/* ── HERO ── */
+.hero{max-width:480px;margin:0 auto;padding:36px 22px 0;}
+
+.hero-logo{display:block;width:110px;margin-bottom:20px;opacity:.95;}
+
+.event-tag{
+  display:inline-flex;align-items:center;gap:8px;
+  background:transparent;
+  border:1px solid var(--ouro-dk);
+  border-radius:4px;
+  padding:5px 12px;
+  font-family:var(--f-corpo);
+  font-size:11px;font-weight:600;
+  color:var(--ouro-lt);
+  text-transform:uppercase;letter-spacing:1px;
+  margin-bottom:18px;
+}
+.event-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--ouro);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.3;}}
+
+.event-info{display:flex;flex-direction:column;gap:7px;margin-bottom:22px;}
+.event-info-item{
+  display:flex;align-items:center;gap:8px;
+  font-size:13px;color:var(--texto2);font-weight:500;
+}
+.event-info-item svg{flex-shrink:0;opacity:.7;}
+
+h1{
+  font-family:var(--f-titulo);
+  font-size:clamp(30px,8vw,40px);
+  font-weight:800;
+  line-height:1.13;
+  letter-spacing:-.3px;
+  color:var(--texto);
+  margin-bottom:16px;
+}
+h1 em{
+  font-style:italic;
+  color:var(--ouro-lt);
+  font-weight:700;
+}
+
+.hero-sub{
+  font-size:15px;line-height:1.7;
+  color:var(--texto2);
+  margin-bottom:26px;
+}
+.hero-sub strong{color:var(--texto);font-weight:600;}
+
+.hero-img{
+  width:100%;max-width:340px;
+  display:block;margin:0 auto;
+  border-radius:10px 10px 0 0;
+}
+
+/* ── CONTADOR ── */
+.contador-wrap{
+  background:var(--card);
+  border:1px solid var(--borda2);
+  border-radius:10px;
+  padding:22px 18px;
+  margin:0 22px 28px;
+  max-width:436px;
+  margin-left:auto;margin-right:auto;
+  text-align:center;
+}
+.contador-label{
+  font-family:var(--f-corpo);
+  font-size:11px;font-weight:600;
+  color:var(--ouro);
+  text-transform:uppercase;letter-spacing:1.5px;
+  margin-bottom:14px;
+}
+.contador{display:flex;justify-content:center;gap:8px;}
+.c-block{
+  background:var(--bg2);
+  border:1px solid var(--borda);
+  border-radius:6px;
+  padding:10px 12px;
+  min-width:62px;
+}
+.c-num{
+  font-family:var(--f-titulo);
+  font-size:30px;font-weight:800;
+  color:var(--ouro-lt);line-height:1;
+}
+.c-label{
+  font-size:9px;font-weight:600;
+  color:var(--texto3);
+  text-transform:uppercase;letter-spacing:.8px;
+  margin-top:3px;
+}
+.c-sep{
+  font-size:26px;font-weight:300;
+  color:var(--borda2);
+  align-self:center;margin-bottom:12px;
+}
+
+/* ── BOTÕES ── */
+.cta-section{padding:0 22px 36px;max-width:480px;margin:0 auto;}
+
+.btn-primary{
+  display:block;width:100%;
+  background:var(--verde);
+  color:#fff;
+  font-family:var(--f-corpo);
+  font-size:15px;font-weight:700;
+  padding:17px 20px;
+  border:none;border-radius:8px;
+  cursor:pointer;
+  text-transform:uppercase;letter-spacing:.8px;
+  text-align:center;text-decoration:none;
+  transition:background .18s, transform .12s;
+  box-shadow:0 4px 20px rgba(31,186,82,.25);
+}
+.btn-primary:hover{background:var(--verde-lt);transform:translateY(-1px);}
+.btn-primary:active{transform:translateY(0);}
+
+.btn-sub{
+  font-size:12px;color:var(--texto3);
+  text-align:center;margin-top:10px;
+  font-weight:500;
+}
+.btn-sub strong{color:var(--verde);font-weight:600;}
+
+/* ── SEÇÕES GENÉRICAS ── */
+.section-wrap{padding:52px 22px;}
+.section-wrap--alt{background:var(--bg2);padding:52px 22px;}
+.section-inner{max-width:480px;margin:0 auto;}
+
+.section-eyebrow{
+  display:inline-block;
+  font-size:10px;font-weight:700;
+  color:var(--ouro);
+  text-transform:uppercase;letter-spacing:2px;
+  margin-bottom:10px;
+  padding-bottom:6px;
+  border-bottom:1px solid var(--ouro-dk);
+}
+
+.section-title{
+  font-family:var(--f-titulo);
+  font-size:clamp(22px,6vw,28px);
+  font-weight:800;
+  line-height:1.25;
+  color:var(--texto);
+  margin-bottom:24px;
+  letter-spacing:-.2px;
+}
+.section-title span{color:var(--ouro-lt);}
+
+/* ── DOR ── */
+.dor-section{background:var(--bg2);}
+.dor-inner{max-width:480px;margin:0 auto;}
+.dor-list{display:flex;flex-direction:column;gap:10px;}
+.dor-item{
+  display:flex;align-items:flex-start;gap:12px;
+  background:var(--card);
+  border:1px solid var(--borda);
+  border-radius:8px;
+  padding:15px 16px;
+  font-size:14px;color:var(--texto2);line-height:1.55;
+  font-weight:500;
+}
+.dor-x{
+  color:var(--perigo);font-size:16px;
+  flex-shrink:0;font-weight:700;
+  margin-top:1px;opacity:.8;
+}
+
+/* ── MECANISMO ── */
+.mec-section{}
+.mec-inner{max-width:480px;margin:0 auto;}
+.mec-intro{font-size:14px;color:var(--texto2);line-height:1.7;margin-bottom:4px;}
+.before-after{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px;}
+.ba-card{border-radius:8px;padding:18px 14px;text-align:center;}
+.ba-card.antes{
+  background:#120a08;
+  border:1px solid #2e1510;
+}
+.ba-card.depois{
+  background:#081210;
+  border:1px solid #1a3028;
+}
+.ba-badge{
+  font-size:10px;font-weight:700;
+  padding:4px 10px;border-radius:3px;
+  text-transform:uppercase;letter-spacing:.8px;
+  margin-bottom:12px;display:inline-block;
+  font-family:var(--f-corpo);
+}
+.ba-card.antes .ba-badge{background:rgba(192,57,43,.2);color:#e07060;border:1px solid rgba(192,57,43,.3);}
+.ba-card.depois .ba-badge{background:rgba(31,186,82,.15);color:var(--verde-lt);border:1px solid rgba(31,186,82,.3);}
+.ba-rota{font-size:12px;color:var(--texto3);margin-bottom:10px;line-height:1.45;font-weight:500;}
+.ba-valor{
+  font-family:var(--f-titulo);
+  font-size:28px;font-weight:800;line-height:1;
+}
+.ba-card.antes .ba-valor{color:#e07060;}
+.ba-card.depois .ba-valor{color:var(--verde-lt);}
+.ba-desc{font-size:11px;color:var(--texto3);margin-top:7px;font-weight:500;}
+.ba-economia{
+  text-align:center;margin-top:12px;
+  padding:14px 16px;
+  background:var(--card);
+  border-radius:8px;
+  border:1px solid var(--ouro-dk);
+}
+.ba-economia-num{
+  font-family:var(--f-titulo);
+  font-size:22px;font-weight:800;
+  color:var(--ouro-lt);
+}
+.ba-economia-label{font-size:12px;color:var(--texto3);margin-top:3px;font-weight:500;}
+
+/* ── APRENDA ── */
+.aprenda-section{background:var(--bg2);}
+.aprenda-inner{max-width:480px;margin:0 auto;}
+.aprenda-list{display:flex;flex-direction:column;gap:12px;margin-top:20px;}
+.aprenda-item{
+  display:flex;align-items:flex-start;gap:14px;
+  padding:18px 16px;
+  background:var(--card);
+  border:1px solid var(--borda);
+  border-radius:8px;
+  position:relative;
+  overflow:hidden;
+}
+.aprenda-item::before{
+  content:'';
+  position:absolute;left:0;top:0;bottom:0;
+  width:3px;
+  background:linear-gradient(180deg,var(--ouro),var(--ouro-dk));
+}
+.aprenda-num{
+  font-family:var(--f-titulo);
+  font-size:20px;font-weight:800;
+  color:var(--ouro-dk);
+  flex-shrink:0;min-width:28px;
+  line-height:1;
+  margin-top:2px;
+}
+.aprenda-text{font-size:14px;color:var(--texto2);line-height:1.55;font-weight:400;}
+.aprenda-text strong{color:var(--texto);font-weight:600;}
+
+/* ── PARA QUEM ── */
+.paraquem-section{}
+.paraquem-inner{max-width:480px;margin:0 auto;}
+.pq-list{display:flex;flex-direction:column;gap:9px;margin-top:20px;}
+.pq-item{
+  display:flex;align-items:flex-start;gap:12px;
+  padding:15px 16px;
+  background:var(--card);
+  border:1px solid var(--borda);
+  border-radius:8px;
+  font-size:14px;color:var(--texto2);line-height:1.55;
+  font-weight:500;
+  transition:border-color .15s;
+}
+.pq-item:hover{border-color:var(--borda2);}
+.pq-check{color:var(--verde);font-size:15px;flex-shrink:0;margin-top:2px;font-weight:700;}
+
+/* ── DEPOIMENTOS ── */
+.dep-section{background:var(--bg2);}
+.dep-inner{max-width:480px;margin:0 auto;}
+.dep-grid{display:flex;flex-direction:column;gap:12px;margin-top:20px;}
+.dep-card{
+  background:var(--card);
+  border:1px solid var(--borda);
+  border-radius:8px;
+  padding:18px 16px;
+}
+.dep-card strong{
+  font-family:var(--f-corpo);
+  font-size:13px;font-weight:700;
+  color:var(--texto);
+  display:block;margin-bottom:8px;
+}
+.dep-card p{
+  font-size:14px;color:var(--texto2);
+  line-height:1.65;font-weight:400;
+  font-style:italic;
+}
+.dep-card em{
+  display:block;margin-top:10px;
+  font-style:normal;
+  font-size:11px;font-weight:600;
+  color:var(--ouro);
+  text-transform:uppercase;letter-spacing:.8px;
+  border-top:1px solid var(--borda);
+  padding-top:8px;
+}
+
+/* ── PREÇO ── */
+.preco-section{}
+.preco-inner{max-width:480px;margin:0 auto;}
+.preco-card{
+  background:var(--card2);
+  border:1px solid var(--borda2);
+  border-radius:12px;
+  padding:30px 24px;
+  text-align:center;
+  margin-top:22px;
+  box-shadow:0 0 40px rgba(201,168,76,.06);
+}
+.preco-tag{
+  background:rgba(201,168,76,.12);
+  border:1px solid var(--ouro-dk);
+  color:var(--ouro-lt);
+  font-size:11px;font-weight:700;
+  padding:5px 14px;border-radius:4px;
+  text-transform:uppercase;letter-spacing:1px;
+  display:inline-block;margin-bottom:18px;
+  font-family:var(--f-corpo);
+}
+.preco-titulo{
+  font-family:var(--f-corpo);
+  font-size:15px;font-weight:600;
+  color:var(--texto2);
+  margin-bottom:18px;
+}
+.preco-itens{
+  text-align:left;
+  display:flex;flex-direction:column;gap:9px;
+  margin-bottom:24px;
+  border-top:1px solid var(--borda);
+  border-bottom:1px solid var(--borda);
+  padding:18px 0;
+}
+.preco-item{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:13px;color:var(--texto2);font-weight:500;
+}
+.preco-item-check{color:var(--verde);flex-shrink:0;font-weight:700;}
+.preco-de{
+  font-size:14px;color:var(--texto3);
+  text-decoration:line-through;
+  margin-bottom:4px;font-weight:500;
+}
+.preco-por{
+  font-family:var(--f-titulo);
+  font-size:52px;font-weight:900;
+  color:var(--texto);line-height:1;
+}
+.preco-por span{font-size:22px;vertical-align:super;font-weight:700;}
+.preco-parcela{
+  font-size:13px;color:var(--texto3);
+  margin-top:5px;margin-bottom:22px;
+  font-weight:500;
+}
+
+/* ── GARANTIA ── */
+.garantia-section{background:var(--bg2);}
+.garantia-inner{
+  max-width:480px;margin:0 auto;
+  display:flex;gap:20px;align-items:flex-start;
+}
+.garantia-icon{font-size:44px;flex-shrink:0;line-height:1;}
+.garantia-titulo{
+  font-family:var(--f-titulo);
+  font-size:20px;font-weight:800;
+  margin-bottom:8px;
+  color:var(--texto);
+}
+.garantia-texto{font-size:14px;color:var(--texto2);line-height:1.65;font-weight:400;}
+
+/* ── DAVID ── */
+.david-section{}
+.david-inner{max-width:480px;margin:0 auto;}
+.david-img{
+  width:100%;max-width:240px;
+  display:block;margin:20px auto;
+  border-radius:10px;
+  border:1px solid var(--borda2);
+}
+.david-texto{font-size:14px;color:var(--texto2);line-height:1.75;margin-bottom:12px;font-weight:400;}
+.david-texto strong{color:var(--texto);font-weight:600;}
+.david-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:22px;}
+.david-stat{
+  background:var(--card);
+  border:1px solid var(--borda);
+  border-radius:8px;padding:16px;text-align:center;
+}
+.david-stat-num{
+  font-family:var(--f-titulo);
+  font-size:22px;font-weight:800;color:var(--ouro-lt);
+}
+.david-stat-label{font-size:11px;color:var(--texto3);margin-top:3px;font-weight:500;}
+
+/* ── FAQ ── */
+.faq-section{background:var(--bg2);}
+.faq-inner{max-width:480px;margin:0 auto;}
+.faq-list{display:flex;flex-direction:column;gap:8px;margin-top:20px;}
+.faq-item{
+  background:var(--card);
+  border:1px solid var(--borda);
+  border-radius:8px;overflow:hidden;
+}
+.faq-question{
+  width:100%;background:none;border:none;
+  padding:16px 18px;text-align:left;
+  font-family:var(--f-corpo);
+  font-size:14px;font-weight:600;
+  color:var(--texto);cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  transition:color .15s;
+}
+.faq-question:hover{color:var(--ouro-lt);}
+.faq-question span{
+  color:var(--ouro-dk);font-size:20px;
+  flex-shrink:0;transition:transform .2s;
+  line-height:1;font-weight:300;
+}
+.faq-answer{
+  font-size:13px;color:var(--texto2);
+  padding:0 18px 16px;
+  line-height:1.65;display:none;
+  border-top:1px solid var(--borda);
+  padding-top:12px;
+  font-weight:400;
+}
+.faq-item.open .faq-answer{display:block;}
+.faq-item.open .faq-question span{transform:rotate(45deg);}
+.faq-item.open .faq-question{color:var(--ouro-lt);}
+
+/* ── FOOTER CTA ── */
+.footer-cta{padding:48px 22px 60px;text-align:center;background:var(--bg2);}
+.footer-cta-inner{max-width:480px;margin:0 auto;}
+.footer-cta p{
+  font-size:15px;color:var(--texto2);
+  margin-bottom:20px;line-height:1.65;
+  font-weight:400;
+}
+.footer-cta p strong{color:var(--texto);font-weight:600;}
+
+.pagamentos{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:14px;}
+.pag-badge{
+  background:transparent;
+  border:1px solid var(--borda2);
+  border-radius:4px;
+  padding:4px 10px;
+  font-size:11px;color:var(--texto3);font-weight:500;
+}
+
+@media(max-width:360px){
+  .before-after{grid-template-columns:1fr;}
+  .david-stats{grid-template-columns:1fr;}
+  .garantia-inner{flex-direction:column;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR ESCASSEZ -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-pulse"></div>
+    <span class="topbar-vagas">Restam apenas 3 vagas do Lote 1</span>
+    <span class="topbar-badge">Garanta agora</span>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="logo.png" alt="Milhas do Zero" class="hero-logo">
+  <div class="event-tag"><span class="event-dot"></span>Imersão ao vivo · 18 de julho</div>
+  <div class="event-info">
+    <div class="event-info-item">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#00CC44" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+      18 de julho de 2026
+    </div>
+    <div class="event-info-item">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#00CC44" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      08h30 às 12h00
+    </div>
+    <div class="event-info-item">
+      <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#00CC44" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+      100% online · ao vivo
+    </div>
+  </div>
+  <h1>Viaje para sempre com o mesmo valor das passagens <em>em uma imersão ao vivo de 3 horas.</em></h1>
+  <p class="hero-sub">Aprenda a viajar com valores fixos de passagens seja em <strong>alta temporada, feriados ou em datas próximas</strong> em uma imersão de uma manhã por menos de R$50,00.</p>
+  <img src="davi.png" alt="David Nussbaum" class="hero-img">
+</div>
+
+<!-- CONTADOR -->
+<div class="contador-wrap">
+  <div class="contador-label">A imersão começa em</div>
+  <div class="contador">
+    <div class="c-block"><div class="c-num" id="cd">00</div><div class="c-label">dias</div></div>
+    <span class="c-sep">:</span>
+    <div class="c-block"><div class="c-num" id="ch">00</div><div class="c-label">horas</div></div>
+    <span class="c-sep">:</span>
+    <div class="c-block"><div class="c-num" id="cm">00</div><div class="c-label">min</div></div>
+    <span class="c-sep">:</span>
+    <div class="c-block"><div class="c-num" id="cs">00</div><div class="c-label">seg</div></div>
+  </div>
+</div>
+
+<!-- CTA HERO -->
+<div class="cta-section">
+  <a href="#checkout" class="btn-primary">Quero garantir minha vaga</a>
+  <p class="btn-sub">🔒 Pagamento seguro · <strong>7 dias de garantia</strong> · Acesso imediato</p>
+</div>
+
+<!-- DOR -->
+<div class="dor-section section-wrap--alt">
+  <div class="dor-inner section-inner">
+    <div class="section-eyebrow">Você se identifica?</div>
+    <h2 class="section-title">Você já tentou de tudo.<br>E em algum momento, <span>sempre pagou caro.</span></h2>
+    <div class="dor-list">
+      <div class="dor-item"><span class="dor-x">✕</span>Desistiu de uma viagem porque a passagem estava cara demais</div>
+      <div class="dor-item"><span class="dor-x">✕</span>Viaja nas férias e paga o dobro só por causa da data</div>
+      <div class="dor-item"><span class="dor-x">✕</span>Comprou em cima da hora e pagou absurdo por não ter outra saída</div>
+      <div class="dor-item"><span class="dor-x">✕</span>Quer viajar de executiva mas acha que é só para rico</div>
+      <div class="dor-item"><span class="dor-x">✕</span>Quer viajar mais vezes por ano gastando o mesmo que gasta hoje</div>
+    </div>
+  </div>
+</div>
+
+<!-- MECANISMO -->
+<div class="mec-section section-wrap">
+  <div class="mec-inner section-inner">
+    <div class="section-eyebrow">A descoberta</div>
+    <h2 class="section-title">Mesmo voo. Mesma data.<br><span>R$1.748 de diferença.</span></h2>
+    <p style="font-size:14px;color:var(--texto2);line-height:1.7;margin-bottom:4px;" class="mec-intro">Existe um valor fixo de passagem aérea pré-definido pelas próprias companhias. Em janeiro, em julho, na véspera do Natal — o número não muda. Quem conhece paga esse valor. Quem não conhece paga o que o sistema cobrar.</p>
+    <div class="before-after">
+      <div class="ba-card antes">
+        <span class="ba-badge">Antes</span>
+        <div class="ba-rota">São Paulo → Rio<br>alta temporada</div>
+        <div class="ba-valor">R$2.485</div>
+        <div class="ba-desc">preço no balcão</div>
+      </div>
+      <div class="ba-card depois">
+        <span class="ba-badge">Depois</span>
+        <div class="ba-rota">mesmo voo<br>mesma data</div>
+        <div class="ba-valor">R$737</div>
+        <div class="ba-desc">pela tabela fixa</div>
+      </div>
+    </div>
+    <div class="ba-economia">
+      <div class="ba-economia-num">R$1.748 economizados</div>
+      <div class="ba-economia-label">no mesmo voo · mesma poltrona · mesma data</div>
+    </div>
+  </div>
+</div>
+
+<!-- O QUE APRENDE -->
+<div class="aprenda-section section-wrap--alt">
+  <div class="aprenda-inner section-inner">
+    <div class="section-eyebrow">Conteúdo da imersão</div>
+    <h2 class="section-title">O que você vai aprender<br><span>em 3 horas ao vivo</span></h2>
+    <div class="aprenda-list">
+      <div class="aprenda-item">
+        <span class="aprenda-num">01</span>
+        <div class="aprenda-text"><strong>Conceito de Passagens Fixas</strong> — como funciona a tabela e por que as companhias nunca divulgam esse valor</div>
+      </div>
+      <div class="aprenda-item">
+        <span class="aprenda-num">02</span>
+        <div class="aprenda-text"><strong>Mercado de passagens aéreas</strong> — o que determina o preço e como usar isso a seu favor</div>
+      </div>
+      <div class="aprenda-item">
+        <span class="aprenda-num">03</span>
+        <div class="aprenda-text"><strong>Voar de última hora pelo Brasil por R$750</strong> — American Airlines com a GOL, na prática ao vivo</div>
+      </div>
+      <div class="aprenda-item">
+        <span class="aprenda-num">04</span>
+        <div class="aprenda-text"><strong>Voar para a Europa ida e volta</strong> — econômica por menos de R$3.000 ou executiva por menos de R$8.000 pela Ibéria Plus</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PARA QUEM É -->
+<div class="paraquem-section section-wrap">
+  <div class="paraquem-inner section-inner">
+    <div class="section-eyebrow">Para quem é</div>
+    <h2 class="section-title">A imersão foi criada<br><span>exatamente para você</span></h2>
+    <div class="pq-list">
+      <div class="pq-item"><span class="pq-check">✓</span>Você quer viajar mais sem aumentar o orçamento</div>
+      <div class="pq-item"><span class="pq-check">✓</span>Você viaja nas férias e está cansado de pagar o dobro</div>
+      <div class="pq-item"><span class="pq-check">✓</span>Você tem milhas paradas e não sabe como usar direito</div>
+      <div class="pq-item"><span class="pq-check">✓</span>Você quer voar de executiva mas acha que é impossível</div>
+      <div class="pq-item"><span class="pq-check">✓</span>Você quer levar a família inteira sem gastar uma fortuna</div>
+    </div>
+  </div>
+</div>
+
+<!-- DEPOIMENTOS -->
+<div class="dep-section section-wrap--alt">
+  <div class="dep-inner section-inner">
+    <div class="section-eyebrow">Resultados reais</div>
+    <h2 class="section-title">Quem aplicou está<br><span>aqui pra contar.</span></h2>
+    <div class="dep-grid">
+      <div class="dep-card">
+        <strong>Lauan · SP</strong>
+        <p>"Voei de executiva da Qatar pra Europa. Quanto custa? De fora: R$14.000. Com o método: R$2.800. Não acreditei até ver o bilhete na mão."</p>
+        <em>✈ executiva internacional</em>
+      </div>
+      <div class="dep-card">
+        <strong>Família · Fortaleza</strong>
+        <p>"Fomos 4 pessoas pro Carnaval em Fortaleza. Cada passagem R$340. Na mesma data o Google Flights mostrava R$1.200 por pessoa."</p>
+        <em>✈ 70% de economia</em>
+      </div>
+      <div class="dep-card">
+        <strong>Luarzinho · comunidade MDZ</strong>
+        <p>"Quase todos os dias alunos viajando de executiva. O David entrega o que promete, sem enrolação."</p>
+        <em>✈ resultado da comunidade</em>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PREÇO -->
+<div class="preco-section section-wrap" id="checkout">
+  <div class="preco-inner section-inner">
+    <div class="section-eyebrow">Investimento</div>
+    <h2 class="section-title">Pague uma vez.<br><span>Aplique para sempre.</span></h2>
+    <div class="preco-card">
+      <span class="preco-tag">🔥 Lote 1 — apenas 3 vagas</span>
+      <div class="preco-titulo">Imersão Passagens Fixas — 18 de julho</div>
+      <div class="preco-itens">
+        <div class="preco-item"><span class="preco-item-check">✓</span>Imersão ao vivo de 3 horas com David Nussbaum</div>
+        <div class="preco-item"><span class="preco-item-check">✓</span>Casos reais ao vivo — Brasil e Europa</div>
+        <div class="preco-item"><span class="preco-item-check">✓</span>Acesso à gravação completa da imersão</div>
+        <div class="preco-item"><span class="preco-item-check">✓</span>Grupo de suporte pós-imersão</div>
+        <div class="preco-item"><span class="preco-item-check">✓</span>7 dias de garantia incondicional</div>
+      </div>
+      <div class="preco-de">de R$170,00</div>
+      <div class="preco-por"><span>R$</span>49<span style="font-size:28px">,90</span></div>
+      <div class="preco-parcela">ou em até 5x no cartão</div>
+      <a href="#" class="btn-primary">Quero garantir minha vaga agora</a>
+      <p class="btn-sub" style="margin-top:10px;">🔒 Pagamento seguro · Acesso imediato</p>
+    </div>
+    <div class="pagamentos">
+      <span class="pag-badge">Pix</span>
+      <span class="pag-badge">Cartão de crédito</span>
+      <span class="pag-badge">Boleto</span>
+      <span class="pag-badge">Google Pay</span>
+      <span class="pag-badge">Apple Pay</span>
+    </div>
+  </div>
+</div>
+
+<!-- GARANTIA -->
+<div class="garantia-section section-wrap--alt">
+  <div class="garantia-inner section-inner">
+    <div class="garantia-icon">🛡️</div>
+    <div>
+      <div class="garantia-titulo">O risco é todo nosso.</div>
+      <p class="garantia-texto">Se a imersão não te trouxer resultado, devolvemos 100% do seu investimento em até 7 dias. Sem burocracia, sem perguntas, sem estresse.</p>
+    </div>
+  </div>
+</div>
+
+<!-- DAVID -->
+<div class="david-section section-wrap">
+  <div class="david-inner section-inner">
+    <div class="section-eyebrow">Quem é o professor</div>
+    <h2 class="section-title">Quem é o<br><span>David Nussbaum.</span></h2>
+    <img src="davi.png" alt="David Nussbaum" class="david-img">
+    <p class="david-texto"><strong>David Nussbaum</strong>, carioca, morador de São Paulo, 26 anos, apaixonado por viagens e desde 2022 no mercado do turismo.</p>
+    <p class="david-texto">Descobriu o mundo das milhas durante a pandemia e transformou esse conhecimento em negócio. Já visitou Dubai, Tailândia, Paris, Nova Iorque, Atenas, Santorini, Mykonos e mais de 20 destinos internacionais — a maioria em cabines executivas e primeira classe.</p>
+    <div class="david-stats">
+      <div class="david-stat"><div class="david-stat-num">+2.000</div><div class="david-stat-label">alunos e clientes</div></div>
+      <div class="david-stat"><div class="david-stat-num">+20</div><div class="david-stat-label">destinos internacionais</div></div>
+      <div class="david-stat"><div class="david-stat-num">+10</div><div class="david-stat-label">cabines executivas</div></div>
+      <div class="david-stat"><div class="david-stat-num">desde 2022</div><div class="david-stat-label">especialista em milhas</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq-section section-wrap--alt">
+  <div class="faq-inner section-inner">
+    <div class="section-eyebrow">Dúvidas</div>
+    <h2 class="section-title">Perguntas<br><span>frequentes</span></h2>
+    <div class="faq-list">
+      <div class="faq-item">
+        <button class="faq-question">A imersão ficará gravada? <span>+</span></button>
+        <div class="faq-answer">Sim. Você recebe acesso à gravação completa logo após o evento ao vivo.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Precisa ter milhas para participar? <span>+</span></button>
+        <div class="faq-answer">Não. A imersão ensina o método das passagens fixas, que funciona independente de você ter ou não milhas acumuladas.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Funciona para qualquer destino? <span>+</span></button>
+        <div class="faq-answer">Sim. O método funciona para voos nacionais e internacionais, em qualquer companhia aérea que opere com tabela de preços fixos.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Qual é a duração da imersão? <span>+</span></button>
+        <div class="faq-answer">A imersão acontece no dia 18 de julho, das 08h30 às 12h00 — são 3 horas e meia de conteúdo 100% prático ao vivo.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Quero pedir reembolso, como faço? <span>+</span></button>
+        <div class="faq-answer">Basta entrar em contato com nosso suporte em até 7 dias após a compra. Devolvemos 100% sem perguntas.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-question">Onde acontece o evento? <span>+</span></button>
+        <div class="faq-answer">O evento é 100% online, ao vivo, transmitido pelo Microsoft Teams. Você acessa de qualquer lugar pelo celular ou computador.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER CTA -->
+<div class="footer-cta">
+  <div class="footer-cta-inner">
+    <p>Você pode continuar pagando <strong>o preço cheio</strong> toda vez que precisar viajar...<br>ou aprender o método em uma manhã por <strong>menos de R$50.</strong></p>
+    <a href="#checkout" class="btn-primary">Quero garantir minha vaga agora</a>
+    <p class="btn-sub" style="margin-top:10px;">🔒 Restam apenas 3 vagas do Lote 1</p>
+  </div>
+</div>
+
+<script>
+// CONTADOR
+var target = new Date('2026-07-18T08:30:00-03:00');
+function pad(n){return n<10?'0'+n:n;}
+function tick(){
+  var now=new Date();
+  var diff=Math.max(0,target-now);
+  var d=Math.floor(diff/86400000);
+  var h=Math.floor((diff%86400000)/3600000);
+  var m=Math.floor((diff%3600000)/60000);
+  var s=Math.floor((diff%60000)/1000);
+  document.getElementById('cd').textContent=pad(d);
+  document.getElementById('ch').textContent=pad(h);
+  document.getElementById('cm').textContent=pad(m);
+  document.getElementById('cs').textContent=pad(s);
+}
+tick();
+setInterval(tick,1000);
+
+// FAQ
+document.querySelectorAll('.faq-question').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    var item=this.closest('.faq-item');
+    item.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
